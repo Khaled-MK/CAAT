@@ -1,0 +1,164 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="fr">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>CAAT Sprint Quiz — Administration</title>
+      <link rel="stylesheet" href="css/admin.css" />
+   </head>
+   <body>
+      <main id="admin-lock" class="admin-lock" aria-labelledby="admin-lock-title">
+         <section class="admin-lock-panel">
+            <h1 id="admin-lock-title">Accès administration</h1>
+            <p>Entrez le code PIN pour gérer les questions.</p>
+            <form id="admin-pin-form">
+               <label for="admin-pin">Code PIN</label>
+               <input id="admin-pin" type="password" inputmode="numeric" autocomplete="off" required />
+               <div class="pin-pad" aria-label="Pavé numérique">
+                  <button type="button" class="pin-key" data-pin-key="1">1</button>
+                  <button type="button" class="pin-key" data-pin-key="2">2</button>
+                  <button type="button" class="pin-key" data-pin-key="3">3</button>
+                  <button type="button" class="pin-key" data-pin-key="4">4</button>
+                  <button type="button" class="pin-key" data-pin-key="5">5</button>
+                  <button type="button" class="pin-key" data-pin-key="6">6</button>
+                  <button type="button" class="pin-key" data-pin-key="7">7</button>
+                  <button type="button" class="pin-key" data-pin-key="8">8</button>
+                  <button type="button" class="pin-key" data-pin-key="9">9</button>
+                  <button type="button" class="pin-key pin-key-action" data-pin-key="clear">Effacer</button>
+                  <button type="button" class="pin-key" data-pin-key="0">0</button>
+                  <button type="button" class="pin-key pin-key-action" data-pin-key="backspace">Supprimer</button>
+               </div>
+               <p id="admin-pin-error" class="admin-pin-error" role="alert" hidden>Code PIN incorrect.</p>
+            </form>
+            <div class="ret-div">
+               <a href="index.html" class="btn btn-secondary">Retour</a>
+            </div>
+         </section>
+      </main>
+      <div id="admin-content" class="admin-container">
+         <!-- En-tête / Navigation -->
+         <header class="admin-header">
+            <div class="header-titles">
+               <h1>Tableau de Bord</h1>
+               <p>Statistiques et analyse des performances en temps réel</p>
+            </div>
+            <div class="header-actions">
+               <a href="index.html" class="btn btn-secondary">🏠 Accueil</a>
+               <a href="questions.html" class="btn btn-primary">❓ Gestion Questions</a>
+            </div>
+         </header>
+
+         <!-- Cartes des métriques globales -->
+         <section class="kpi-grid">
+            <div class="kpi-card">
+               <div class="kpi-icon">👥</div>
+               <div class="kpi-content">
+                  <span class="kpi-label">Participants Globaux</span>
+                  <h2 id="total-participants" class="kpi-value">0</h2>
+               </div>
+            </div>
+
+            <div class="kpi-card">
+               <div class="kpi-icon">🏆</div>
+               <div class="kpi-content">
+                  <span class="kpi-label">Gagnants Totaux</span>
+                  <h2 id="total-winners" class="kpi-value">0</h2>
+               </div>
+            </div>
+
+            <div class="kpi-card">
+               <div class="kpi-icon">📊</div>
+               <div class="kpi-content">
+                  <span class="kpi-label">Moyenne Globale</span>
+                  <h2 id="global-avg-score" class="kpi-value">0 / 0</h2>
+               </div>
+            </div>
+         </section>
+
+         <!-- Top 3 des questions les plus réussies -->
+         <section class="admin-section">
+            <div class="section-header">
+               <h2>🥇 Top 3 — Questions à fort taux de réussite</h2>
+            </div>
+            <div id="top-questions-list" class="top-questions-grid">
+               <div class="loading">Chargement des données...</div>
+            </div>
+         </section>
+
+         <!-- Répartition par Jour -->
+         <section class="admin-section">
+            <div class="section-header">
+               <h2>📅 Statistiques par Jour</h2>
+            </div>
+            <div class="table-wrapper">
+               <table class="admin-table">
+                  <thead>
+                     <tr>
+                        <th>Date</th>
+                        <th>Participants</th>
+                        <th>Gagnants</th>
+                        <th>Moyenne Score</th>
+                     </tr>
+                  </thead>
+                  <tbody id="daily-stats-body">
+                     <tr>
+                        <td colspan="4" class="loading">Chargement...</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+
+         <!-- Répartition par Heure -->
+         <section class="admin-section">
+            <div class="section-header">
+               <h2>⏰ Statistiques par Heure</h2>
+            </div>
+            <div class="table-wrapper">
+               <table class="admin-table">
+                  <thead>
+                     <tr>
+                        <th>Tranche Horaire</th>
+                        <th>Participants</th>
+                        <th>Gagnants</th>
+                        <th>Moyenne Score</th>
+                     </tr>
+                  </thead>
+                  <tbody id="hourly-stats-body">
+                     <tr>
+                        <td colspan="4" class="loading">Chargement...</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+
+         <section class="admin-section">
+            <div class="section-header">
+               <h2>Historique global des participations</h2>
+            </div>
+            <div class="table-wrapper">
+               <table class="admin-table">
+                  <thead>
+                     <tr>
+                        <th>Participant</th>
+                        <th>Téléphone</th>
+                        <th>Score</th>
+                        <th>Date et heure</th>
+                     </tr>
+                  </thead>
+                  <tbody id="participants-stats-body">
+                     <tr>
+                        <td colspan="4" class="loading">Chargement...</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+      </div>
+
+      <script src="js/admin.js" defer></script>
+   </body>
+</html>

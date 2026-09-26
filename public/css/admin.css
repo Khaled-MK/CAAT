@@ -1,0 +1,319 @@
+/** @format */
+
+:root {
+   --color-bg: #0d1117;
+   --color-surface: #161b22;
+   --color-border: #30363d;
+   --color-text: #c9d1d9;
+   --color-text-white: #ffffff;
+   --color-purple: #a8188d;
+   --color-purple-hover: #c423a6;
+   --color-gold: #f1e05a;
+   --radius-md: 10px;
+   --radius-lg: 16px;
+}
+
+* {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+}
+
+body {
+   background-color: var(--color-bg);
+   color: var(--color-text);
+   padding: 2rem 1rem;
+   min-height: 100vh;
+}
+
+.admin-lock {
+   min-height: calc(100vh - 4rem);
+   display: grid;
+   place-items: center;
+}
+
+.admin-lock-panel {
+   width: min(100%, 380px);
+   padding: 2rem;
+   background: var(--color-surface);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-lg);
+   text-align: center;
+}
+
+.admin-lock-panel h1 {
+   color: var(--color-text-white);
+   font-size: 1.5rem;
+   margin-bottom: 0.5rem;
+}
+
+.admin-lock-panel > p {
+   margin-bottom: 1.5rem;
+}
+
+.admin-lock-panel form {
+   display: grid;
+   gap: 0.75rem;
+   text-align: left;
+}
+
+.admin-lock-panel label {
+   font-weight: 600;
+   color: var(--color-text-white);
+}
+
+.admin-lock-panel input {
+   width: 100%;
+   padding: 0.75rem;
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-md);
+   background: var(--color-bg);
+   color: var(--color-text-white);
+   font-size: 1.2rem;
+   letter-spacing: 0.4rem;
+   text-align: center;
+}
+
+.admin-lock-panel input:focus {
+   outline: none;
+   border-color: var(--color-purple);
+   box-shadow: 0 0 0 3px rgba(168, 24, 141, 0.25);
+}
+
+.admin-lock-panel input.pin-input-error,
+.admin-lock-panel input.pin-input-error:focus {
+   border-color: #dc2626;
+   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
+}
+
+.pin-pad {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 0.6rem;
+   margin-top: 0.25rem;
+}
+
+.pin-key {
+   min-height: 3.5rem;
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-md);
+   background: rgba(255, 255, 255, 0.08);
+   color: var(--color-text-white);
+   font-size: 1.2rem;
+   font-weight: 700;
+   cursor: pointer;
+   touch-action: manipulation;
+}
+
+.pin-key:active {
+   background: var(--color-purple);
+   transform: scale(0.97);
+}
+
+.pin-key-action {
+   font-size: 0.75rem;
+}
+
+.admin-pin-error {
+   color: #f87171;
+}
+
+.admin-container {
+   max-width: 1200px;
+   margin: 0 auto;
+   display: none;
+   flex-direction: column;
+   gap: 2rem;
+}
+
+/* En-tête */
+.admin-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: var(--color-surface);
+   padding: 1.5rem 2rem;
+   border-radius: var(--radius-lg);
+   border: 1px solid var(--color-border);
+}
+
+.admin-header h1 {
+   color: var(--color-text-white);
+   font-size: 1.8rem;
+}
+
+.header-actions {
+   display: flex;
+   gap: 1rem;
+}
+
+/* Boutons */
+.btn {
+   display: inline-flex;
+   align-items: center;
+   padding: 0.75rem 1.25rem;
+   border-radius: var(--radius-md);
+   text-decoration: none;
+   font-weight: 600;
+   font-size: 0.95rem;
+   transition: all 0.2s ease;
+   border: none;
+   cursor: pointer;
+}
+
+.btn-primary {
+   background: var(--color-purple);
+   color: var(--color-text-white);
+}
+
+.btn-primary:hover {
+   background: var(--color-purple-hover);
+}
+
+.btn-secondary {
+   background: rgba(255, 255, 255, 0.08);
+   color: var(--color-text-white);
+   border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+   background: rgba(255, 255, 255, 0.15);
+}
+
+/* KPI Grid */
+.kpi-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+   gap: 1.5rem;
+}
+
+.kpi-card {
+   background: var(--color-surface);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-lg);
+   padding: 1.5rem;
+   display: flex;
+   align-items: center;
+   gap: 1.2rem;
+}
+
+.kpi-icon {
+   font-size: 2.5rem;
+   background: rgba(255, 255, 255, 0.05);
+   padding: 0.8rem;
+   border-radius: var(--radius-md);
+}
+
+.kpi-label {
+   font-size: 0.85rem;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+}
+
+.kpi-value {
+   color: var(--color-text-white);
+   font-size: 1.8rem;
+   margin-top: 0.2rem;
+}
+
+/* Sections & Tableaux */
+.admin-section {
+   background: var(--color-surface);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-lg);
+   padding: 1.5rem;
+}
+
+.section-header h2 {
+   color: var(--color-text-white);
+   font-size: 1.3rem;
+   margin-bottom: 1.2rem;
+}
+
+.table-wrapper {
+   overflow-x: auto;
+}
+
+.admin-table {
+   width: 100%;
+   border-collapse: collapse;
+   text-align: left;
+}
+
+.admin-table th,
+.admin-table td {
+   padding: 1rem;
+   border-bottom: 1px solid var(--color-border);
+   vertical-align: top;
+}
+
+.admin-table th {
+   color: var(--color-text-white);
+   background: rgba(255, 255, 255, 0.02);
+   font-weight: 600;
+}
+
+/* Cards Top Questions */
+.top-questions-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+   gap: 1rem;
+}
+
+.question-card {
+   background: rgba(255, 255, 255, 0.03);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-md);
+   padding: 1.2rem;
+   position: relative;
+}
+
+.question-rank {
+   position: absolute;
+   top: 1rem;
+   right: 1rem;
+   font-size: 1.2rem;
+   font-weight: bold;
+   color: var(--color-gold);
+}
+
+.question-text {
+   color: var(--color-text-white);
+   font-size: 0.95rem;
+   font-weight: 500;
+   margin-bottom: 1rem;
+   padding-right: 2rem;
+}
+
+.progress-bar-bg {
+   background: rgba(255, 255, 255, 0.1);
+   height: 8px;
+   border-radius: 4px;
+   overflow: hidden;
+   margin-bottom: 0.5rem;
+}
+
+.progress-bar-fill {
+   background: var(--color-purple);
+   height: 100%;
+   border-radius: 4px;
+}
+
+.success-rate {
+   font-size: 0.85rem;
+   font-weight: 600;
+   color: var(--color-gold);
+}
+
+.loading {
+   text-align: center;
+   padding: 2rem;
+   opacity: 0.6;
+}

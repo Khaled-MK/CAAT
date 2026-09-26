@@ -1,0 +1,45 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="fr">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>CAAT Sprint Quiz — Résultat</title>
+      <link rel="stylesheet" href="css/result.css" />
+   </head>
+   <body>
+      <div class="app-container">
+         <main class="card-panel">
+            <div id="result-icon" class="result-icon">🏆</div>
+            <h2 id="result-title">RÉSULTATS</h2>
+            <p class="panel-subtitle">Votre score final au CAAT Sprint Quiz</p>
+
+            <div id="score-display" class="score-display">0 / 0</div>
+
+            <div id="reward-container" class="reward-box">
+               <!-- Message / Code promo injecté par TS -->
+            </div>
+
+            <!-- Formulaire d'enregistrement du joueur -->
+            <!-- Formulaire d'enregistrement du joueur -->
+            <form id="player-form" class="player-form">
+               <div class="input-group">
+                  <span class="input-icon">👤</span>
+                  <input type="text" id="firstname" placeholder="Votre prénom" required autocomplete="off" />
+               </div>
+
+               <div class="input-group">
+                  <span class="input-icon">📱</span>
+                  <input type="tel" id="phone" placeholder="Numéro de téléphone" required autocomplete="off" />
+               </div>
+
+               <button type="submit" id="submit-btn" class="btn btn-primary btn-giant">Enregistrer mon score</button>
+            </form>
+            <a href="index.html" id="replay-btn" class="btn btn-secondary btn-giant margin-top hidden">Accueil</a>
+         </main>
+      </div>
+
+      <script src="js/result.js" defer></script>
+   </body>
+</html>

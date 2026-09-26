@@ -1,0 +1,65 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="fr">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+      <title>CAAT Sprint Quiz — Épreuve</title>
+      <link rel="stylesheet" href="css/quiz.css" />
+   </head>
+   <body>
+      <main class="app-container">
+         <!-- SECTION QUIZ / GAMEPLAY -->
+         <section id="screen-quiz" class="screen active">
+            <div class="quiz-header">
+               <div class="quiz-step-badge">Question <span id="current-question-num">1</span> / <span id="total-questions-num">5</span></div>
+
+               <!-- Compte à rebours circulaire SVG -->
+               <div class="timer-circle-container">
+                  <svg class="timer-svg" viewBox="0 0 100 100">
+                     <!-- Cercle d'arrière-plan -->
+                     <circle class="timer-circle-bg" cx="50" cy="50" r="42"></circle>
+                     <!-- Cercle de progression animé -->
+                     <circle id="timer-circle-progress" class="timer-circle-progress" cx="50" cy="50" r="42"></circle>
+                  </svg>
+                  <span id="timer-text" class="timer-circle-text">08s</span>
+               </div>
+            </div>
+
+            <div class="quiz-body">
+               <!-- Le texte de la question est généré par TypeScript -->
+               <h2 id="question-text" class="question-text">Chargement des questions ...</h2>
+
+               <!-- Les options de réponse sont générées dynamiquement -->
+               <div id="answers-container" class="answers-grid"></div>
+            </div>
+         </section>
+
+         <!-- SECTION RÉSULTAT -->
+         <section id="screen-result" class="screen">
+            <div class="card-panel result-panel">
+               <div id="result-icon" class="result-icon">🏆</div>
+               <h2 id="result-title">Résultats</h2>
+               <p id="result-subtitle" class="panel-subtitle">Votre score final :</p>
+               <div id="result-score" class="score-display">0 / 5</div>
+
+               <!-- Block Gagnant -->
+               <div id="reward-box" class="reward-box hidden">
+                  <p class="reward-msg">🎉 Vous avez gagné un cadeau ! Félicitations !</p>
+                  <p class="reward-label">Présentez ce code à l'hôte(sse) d'accueil :</p>
+                  <div id="reward-code" class="code-badge">CAAT-XXXX</div>
+               </div>
+
+               <!-- Block Perdu / Quota atteint -->
+               <div id="no-reward-box" class="reward-box loss-box hidden">
+                  <p id="loss-message">Merci d'avoir participé au CAAT Sprint Quiz ! N'hésitez pas à échanger avec nos conseillers sur le stand.</p>
+               </div>
+
+               <button id="btn-restart" class="btn btn-primary btn-giant margin-top">RETOUR À L'ACCUEIL</button>
+            </div>
+         </section>
+      </main>
+      <script src="./js/quiz.js"></script>
+   </body>
+</html>

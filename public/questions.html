@@ -1,0 +1,88 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="fr">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>CAAT Sprint Quiz — Administration des Questions</title>
+      <link rel="stylesheet" href="css/question.css" />
+   </head>
+   <body class="admin-body">
+      <div class="admin-container">
+         <header class="admin-header">
+            <h1>Gestion des Questions BDD</h1>
+            <a href="index.html" class="btn btn-secondary">Retour à l'accueil</a>
+         </header>
+
+         <!-- Formulaire d'ajout / modification -->
+         <section class="card-panel admin-form-panel">
+            <h2 id="form-title">Ajouter une Question</h2>
+            <form id="question-form">
+               <!-- ID caché pour détecter le mode modification -->
+               <input type="hidden" id="input-id" value="" />
+
+               <div class="form-group">
+                  <label for="input-question">Intitulé de la question :</label>
+                  <textarea id="input-question" rows="2" required placeholder="Ex: Quel est le principe du Dropshipping ?"></textarea>
+               </div>
+
+               <div class="form-row">
+                  <div class="form-group">
+                     <label for="input-opt-a">Option A :</label>
+                     <input type="text" id="input-opt-a" required placeholder="Réponse A" />
+                  </div>
+
+                  <div class="form-group">
+                     <label for="input-opt-b">Option B :</label>
+                     <input type="text" id="input-opt-b" required placeholder="Réponse B" />
+                  </div>
+
+                  <div class="form-group">
+                     <label for="input-opt-c">Option C :</label>
+                     <input type="text" id="input-opt-c" required placeholder="Réponse C" />
+                  </div>
+               </div>
+
+               <div class="form-group">
+                  <label for="select-correct">Bonne Réponse :</label>
+                  <select id="select-correct" required>
+                     <option value="0">Option A</option>
+                     <option value="1">Option B</option>
+                     <option value="2">Option C</option>
+                  </select>
+               </div>
+
+               <div class="form-actions">
+                  <button type="submit" id="btn-save" class="btn btn-primary">Enregistrer</button>
+                  <button type="button" id="btn-cancel" class="btn btn-secondary hidden">Annuler</button>
+               </div>
+            </form>
+         </section>
+
+         <!-- Tableau des questions existantes -->
+         <section class="card-panel admin-list-panel">
+            <h2>Questions en BDD (<span id="questions-count">0</span>)</h2>
+            <table class="admin-table">
+               <thead>
+                  <tr>
+                     <th>ID</th>
+                     <th>Question</th>
+                     <th>Option A</th>
+                     <th>Option B</th>
+                     <th>Option C</th>
+                     <th>Correcte</th>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody id="questions-table-body">
+                  <tr>
+                     <td colspan="7" class="text-center">Chargement de la BDD...</td>
+                  </tr>
+               </tbody>
+            </table>
+         </section>
+      </div>
+      <script src="./js/questions.js" defer></script>
+   </body>
+</html>

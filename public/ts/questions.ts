@@ -1,0 +1,172 @@
+/** @format */
+
+// Types
+interface Question {
+   id: number;
+   question: string;
+   option_a: string;
+   option_b: string;
+   option_c: string;
+   correct_index: number;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+   loadQuestions();
+   initFormEvents();
+});
+
+/**
+ * Récupère et affiche la liste des questions depuis l'API Express
+ */
+async function loadQuestions(): Promise<void> {
+   const tbody = document.getElementById("questions-table-body") as HTMLTableSectionElement;
+   const countSpan = document.getElementById("questions-count") as HTMLElement;
+
+   try {
+      const response = await fetch("/api/questions");
+      if (!response.ok) throw new Error("Erreur de chargement");
+
+      const questions: Question[] = await response.json();
+      console.log("Questions reçue : ", questions);
+      countSpan.textContent = questions.length.toString();
+
+      if (questions.length === 0) {
+         tbody.innerHTML = '<tr><td colspan="7" class="text-center">Aucune question enregistrée.</td></tr>';
+         return;
+      }
+
+      tbody.innerHTML = "";
+
+      questions.forEach((q) => {
+         const tr = document.createElement("tr");
+         const optLabels = ["Option A", "Option B", "Option C"];
+         const correctText = optLabels[q.correct_index] || "Inconnu";
+
+         tr.innerHTML = `
+    <td>${q.id}</td>
+  <td><strong>${escapeHtml(q.question)}</strong></td>
+  <td>${escapeHtml(q.option_a)}</td>
+  <td>${escapeHtml(q.option_b)}</td>
+  <td>${escapeHtml(q.option_c)}</td>
+  <td><span class="badge badge-success">${correctText}</span></td>
+  <td class="action-cells">
+    <button class="btn-sm btn-edit" onclick="editQuestion(${q.id})" title="Modifier">✏️</button>
+    <button class="btn-sm btn-delete" onclick="deleteQuestion(${q.id})" title="Supprimer">🗑️</button>
+  </td>
+`;
+
+         tbody.appendChild(tr);
+      });
+   } catch (err) {
+      console.error(err);
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center">Erreur lors de la récupération des données.</td></tr>';
+   }
+}
+
+/**
+ * Gestion de la soumission (Création / Modification) et de l'annulation
+ */
+function initFormEvents(): void {
+   const form = document.getElementById("question-form") as HTMLFormElement;
+   const btnCancel = document.getElementById("btn-cancel") as HTMLButtonElement;
+
+   form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const idVal = (document.getElementById("input-id") as HTMLInputElement).value;
+      const questionData = {
+         question: (document.getElementById("input-question") as HTMLTextAreaElement).value.trim(),
+         option_a: (document.getElementById("input-opt-a") as HTMLInputElement).value.trim(),
+         option_b: (document.getElementById("input-opt-b") as HTMLInputElement).value.trim(),
+         option_c: (document.getElementById("input-opt-c") as HTMLInputElement).value.trim(),
+         correct_index: parseInt((document.getElementById("select-correct") as HTMLSelectElement).value, 10),
+      };
+
+      const isUpdate = Boolean(idVal);
+      const url = isUpdate ? `/api/questions/${idVal}` : "/api/questions";
+      const method = isUpdate ? "PUT" : "POST";
+
+      try {
+         const res = await fetch(url, {
+            method: method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(questionData),
+         });
+
+         if (res.ok) {
+            resetForm();
+            loadQuestions();
+         } else {
+            alert("Erreur lors de l'enregistrement.");
+         }
+      } catch (err) {
+         console.error(err);
+         alert("Erreur réseau.");
+      }
+   });
+
+   btnCancel.addEventListener("click", () => {
+      resetForm();
+   });
+}
+
+/**
+ * Charge les données d'une question dans le formulaire pour modification
+ */
+async function editQuestion(id: number): Promise<void> {
+   try {
+      const res = await fetch(`/api/questions/${id}`);
+      if (!res.ok) return;
+
+      const q: Question = await res.json();
+
+      (document.getElementById("input-id") as HTMLInputElement).value = q.id.toString();
+      (document.getElementById("input-question") as HTMLTextAreaElement).value = q.question;
+      (document.getElementById("input-opt-a") as HTMLInputElement).value = q.option_a;
+      (document.getElementById("input-opt-b") as HTMLInputElement).value = q.option_b;
+      (document.getElementById("input-opt-c") as HTMLInputElement).value = q.option_c;
+      (document.getElementById("select-correct") as HTMLSelectElement).value = q.correct_index.toString();
+
+      document.getElementById("form-title")!.textContent = `Modifier la Question #${q.id}`;
+      document.getElementById("btn-save")!.textContent = "Mettre à jour";
+      document.getElementById("btn-cancel")!.classList.remove("hidden");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+   } catch (err) {
+      console.error(err);
+   }
+}
+
+/**
+ * Supprime une question
+ */
+async function deleteQuestion(id: number): Promise<void> {
+   if (!confirm(`Voulez-vous vraiment supprimer la question #${id} ?`)) return;
+
+   try {
+      const res = await fetch(`/api/questions/${id}`, { method: "DELETE" });
+      if (res.ok) {
+         resetForm();
+         loadQuestions();
+      } else {
+         alert("Impossible de supprimer la question.");
+      }
+   } catch (err) {
+      console.error(err);
+   }
+}
+
+function resetForm(): void {
+   const form = document.getElementById("question-form") as HTMLFormElement;
+   form.reset();
+   (document.getElementById("input-id") as HTMLInputElement).value = "";
+   document.getElementById("form-title")!.textContent = "Ajouter une Question";
+   document.getElementById("btn-save")!.textContent = "Enregistrer";
+   document.getElementById("btn-cancel")!.classList.add("hidden");
+}
+
+function escapeHtml(str: string): string {
+   const div = document.createElement("div");
+   div.textContent = str;
+   return div.innerHTML;
+}
